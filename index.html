@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tunc academy — e-sertifikat verifikasiya sistemi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        .brand-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            text-transform: lowercase;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 28px;
+            text-transform: lowercase;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            text-transform: lowercase;
+        }
+        input:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+        }
+        button {
+            padding: 14px 24px;
+            background-color: #0d6efd;
+            color: #ffffff;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-transform: lowercase;
+        }
+        button:hover {
+            background-color: #0b5ed7;
+        }
+        #result {
+            margin-top: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: left;
+        }
+        .status-box {
+            padding: 16px;
+            border-radius: 10px;
+        }
+        .success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+            text-align: center !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="brand-title">tunc academy</div>
+    <div class="subtitle">e-sertifikat verifikasiya sistemi</div>
+
+    <div class="input-group">
+        <input type="text" id="certInput" placeholder="sertifikat kodu (məs: ta-101)">
+        <button onclick="checkCert()">yoxla</button>
+    </div>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    // Baza: Bütün kodları kiçik hərflərlə yazırsınız
+    const database = {
+        "ta-101": { name: "Əli Məmmədov", course: "İngilis Dili Təlimi", date: "2026" },
+        "ta-102": { name: "Aysel Əliyeva", course: "Qrafik Dizayn", date: "2026" },
+        "ta-103": { name: "Rəşad Qasımov", course: "Veb Proqramlaşdırma", date: "2026" }
+    };
+
+    function checkCert() {
+        const code = document.getElementById("certInput").value.trim().toLowerCase();
+        const resultDiv = document.getElementById("result");
+
+        if (!code) {
+            resultDiv.innerHTML = `<div class="status-box error">zəhmət olmasa sertifikat kodunu daxil edin.</div>`;
+            return;
+        }
+
+        if (database[code]) {
+            const data = database[code];
+            resultDiv.innerHTML = `
+                <div class="status-box success">
+                    <strong>✅ sertifikat təsdiqləndi!</strong><br><br>
+                    <strong>tələbə:</strong> ${data.name}<br>
+                    <strong>tədris proqramı:</strong> ${data.course}<br>
+                    <strong>tarix:</strong> ${data.date}<br>
+                    <strong>status:</strong> etibarlıdır (rəsmi tunc academy)
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = `
+                <div class="status-box error">
+                    ❌ <strong>məlumat tapılmadı!</strong><br>
+                    daxil etdiyiniz sertifikat kodu etibarsızdır və ya bazada yoxdur.
+                </div>
+            `;
+        }
+    }
+</script>
+
+</body>
+</html>
